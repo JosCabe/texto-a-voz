@@ -1,14 +1,22 @@
+<!-- 1. Banner decorativo centrado -->
+<p align="center">
+  <img src="https://ruta-de-tu-imagen/banner.png" width="800"/>
+</p>
+
+<!-- 2. Badges y título -->
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.7%2B-blue?style=flat&logo=python" alt="Python Version">
   <img src="https://img.shields.io/github/license/JosCabe/texto-a-voz" alt="License">
 </p>
 
-<h1 align="center">🗣️ Texto a Voz - Conversor Inteligente Multilenguaje</h1>
+<h1 align="center">🧠 Texto a Voz - Conversor Inteligente Multilenguaje</h1>
 
+<!-- 3. Descripción corta -->
 <p align="center">
-  Convierte texto en voz, detecta idioma automáticamente, traduce, resume y reproduce en audio. Todo en un solo script.  
+  Convierte texto en voz, detecta idioma automáticamente, traduce, resume y reproduce en audio. Todo en un solo script.
 </p>
 
+<!-- 4. Estado del proyecto -->
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Activo-brightgreen" alt="Estado">
   <img src="https://img.shields.io/badge/Colaboraciones-Bienvenidas-blueviolet" alt="Colaboraciones">
@@ -16,8 +24,7 @@
 
 ---
 
-
-
+<!-- 5. Descripción completa -->
 Este proyecto permite convertir texto en voz a partir de diferentes fuentes. Además, puede detectar automáticamente el idioma, traducir el texto a varios idiomas disponibles, generar un resumen (si el texto es largo, concretamente mayor a 99 palabras) y reproducirlo en voz alta usando Google Text-to-Speech (`gTTS`).
 
 ---
