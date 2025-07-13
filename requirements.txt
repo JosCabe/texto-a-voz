@@ -1,0 +1,10 @@
+
+# Lista de dependencias para el proyecto Texto a Voz
+# Se puede instalar todo con: pip install -r requirements.txt
+
+gTTS
+newspaper3k
+langdetect
+googletrans==4.0.0-rc1
+sumy
+
