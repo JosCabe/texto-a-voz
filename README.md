@@ -1,6 +1,6 @@
 <!-- 1. Banner decorativo centrado -->
 <p align="center">
-  <img src="https://ruta-de-tu-imagen/banner.png" width="800"/>
+  <img src="https://github.com/JosCabe/texto-a-voz/blob/main/banner.png?raw=true" width="800"/>
 </p>
 
 <!-- 2. Badges y título -->
