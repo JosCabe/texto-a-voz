@@ -47,7 +47,7 @@ Este proyecto permite convertir texto en voz a partir de diferentes fuentes. Ade
   - Turco (`tr`)
   - Chino simplificado (`zh-cn` o `cn`)
 
-- 🧠 Si el texto tiene más de 100 palabras, puede generar un resumen automático con 5 oraciones clave.
+- 🧠 Si el texto tiene más de 100 palabras, puede generar un resumen automático del mismo.
 - 🔊 Convierte el texto final en audio (`.mp3`) y lo reproduce automáticamente.
 
 ---
