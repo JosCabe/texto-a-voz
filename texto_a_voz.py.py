@@ -1,13 +1,13 @@
 import os
 import platform
 import subprocess
+import trafilatura
+import jieba
 from gtts import gTTS
-from newspaper import Article
 from langdetect import detect
 from googletrans import Translator
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer
+from summa.summarizer import summarize
+
 
 class TextoAVoz:
     """
@@ -38,10 +38,11 @@ class TextoAVoz:
     #Método texto artículos web
     def leer_url(self, url):
         try:
-            articulo = Article(url, languaje="es")
-            articulo.download()
-            articulo.parse()
-            self.texto = articulo.text
+            downloaded = trafilatura.fetch_url(url)
+            if downloaded:
+                self.texto = trafilatura.extract(downloaded, include_comments = False)
+            else:    
+                self.texto = "No se pudo descargar el contenido"
         except Exception as e:
             print(f"Error al procesar la URL: {e}")
 
@@ -71,18 +72,29 @@ class TextoAVoz:
 
     #Método para resumir el texto >= 100 palabras
     def resumir_texto(self, min_palabras=100, num_oraciones=5):
-        if len(self.texto.split()) < min_palabras:
+        idioma_actual = detect(self.texto)#Si el idioma es chino, segmentamos con jieba
+
+        if idioma_actual.startswith("zh"):
+            print("🔍 Segmentando texto en chino con jieba...")
+            palabras_chinas = list(jieba.cut(self.texto))
+            texto_segmentado = " ".join(palabras_chinas)
+        else:
+             texto_segmentado = self.texto
+        
+        if len(texto_segmentado.split()) < min_palabras:    #Ya podemos comprobar la cantidad de palabras correctamente
             print(f"\n⚠️ El texto tiene menos de {min_palabras} palabras. No se puede resumir.")
             return
 
-        print(f"\n🧠 Generando resumen de {num_oraciones} oraciones...")
-        parser = PlaintextParser.from_string(self.texto, Tokenizer("english"))
-        resumen = LsaSummarizer()(parser.document, num_oraciones)
-        resumen_texto = " ".join(str(oracion) for oracion in resumen)
-        self.texto = resumen_texto
-        idioma_actual = detect(self.texto).upper()
-        print(f"\n--- RESUMEN DEL TEXTO ({idioma_actual}) ---\n")
-        print(self.texto)
+        print(f"\n🧠 Generando resumen...")
+        resumen = summarize(self.texto, split = True)
+        if resumen:
+            resumen_texto = " ".join(resumen[:num_oraciones])
+            self.texto = resumen_texto
+            idioma_actual = detect(self.texto).upper()
+            print(f"\n🔽🔽🔽 RESUMEN EN {idioma_actual} 🔽🔽🔽\n" + "-"*30)
+            print(self.texto)
+            return idioma_actual
+
    
 
     #Método para traducir el texto a otro idioma
@@ -99,14 +111,22 @@ class TextoAVoz:
         except Exception as e:
             print(f"❌ Error al traducir el texto: {e}")
        
-
+    #Método para contar palabras para determinar si hacer o no el resumen.
+    def contar_palabras(self):
+        idioma = detect(self.texto)
+        if idioma.startswith("zh"):
+            palabras = list(jieba.cut(self.texto))
+            return len(palabras)
+        else:
+            return len(self.texto.split())
+        
 
 
 #CONDICIONAL PRINCIPAL PARA SELECCIONAR LA FUENTE DEL TEXTO.
 if __name__ == "__main__":
     while True:
         texto_a_voz = TextoAVoz()
-
+        
         print("Selecciona cómo quieres ingresar el texto:")
         print("1. Texto fijo")
         print("2. Introducir texto manualmente")
@@ -151,12 +171,8 @@ if __name__ == "__main__":
 # ═════════════════════════════════════
 
                 if opcion_extra == "1":
-                    if len(texto_a_voz.texto.split()) >= 100:
-                        texto_a_voz.traducir_texto("en")
-                        texto_a_voz.resumir_texto()
-                        texto_a_voz.traducir_texto("es")
-                        print("\n--- RESUMEN TRADUCIDO AL ESPAÑOL ---\n")
-                        print(texto_a_voz.texto)
+                    if texto_a_voz.contar_palabras() >= 100:
+                        texto_a_voz.resumir_texto() 
                         texto_a_voz.reproducir()
                     else:
                         print("⚠️ El texto es muy corto para hacer un resumen.")
@@ -216,7 +232,7 @@ if __name__ == "__main__":
 # Descripción del programa:
 # Este script permite ingresar texto desde diferentes fuentes (fijo, manual, archivo o URL),
 # detecta su idioma automáticamente, da la opción de traducirlo a varios idiomas soportados
-# (es, en, fr, it, de), puede generar un resumen si el texto tiene más de 100 palabras,
+# (es, en, fr, it, de, tr, zh-cn), puede generar un resumen si el texto tiene más de 100 palabras,
 # y convierte el texto final (original, resumido o traducido) en audio utilizando gTTS.
 # -------------------------------------------------------------------------------------
 
@@ -233,7 +249,7 @@ Este script permite convertir texto a voz desde distintas fuentes:
 
 Funcionalidades adicionales:
 - Resume automáticamente textos largos (más de 100 palabras)
-- Traduce el texto a diferentes idiomas (es, en, fr, it, de)
+- Traduce el texto a diferentes idiomas (es, en, fr, it, de, tr, zh-cn)
 - Reproduce el texto con voz usando gTTS
 
 El flujo se adapta según las decisiones del usuario:
@@ -241,8 +257,9 @@ El flujo se adapta según las decisiones del usuario:
 - Puede traducir el contenido antes o después del resumen.
 - Ofrece una experiencia fluida con mensajes claros y voz generada.
 
-Autor: [Tu Nombre o Alias]
-Fecha: [Puedes poner la fecha actual]
+Autor: José Cabello Romero
+Fecha: 13/07/2025
 ---------------------------------------------------------------
 """
+
 
