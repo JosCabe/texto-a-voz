@@ -1,10 +1,9 @@
-
 # Lista de dependencias para el proyecto Texto a Voz
 # Se puede instalar todo con: pip install -r requirements.txt
 
-gTTS
-newspaper3k
-langdetect
-googletrans==4.0.0-rc1
-sumy
-
+gTTS                       #Convertir texto a audio.
+langdetect                 #Detectar el idioma del texto.
+googletrans==4.0.0-rc1     #Traducir a otros idiomas.
+summa                      #Generar resúmenes multilingües. 
+trafilaturra               #Extraer texto de paginas WEB.
+jieba                      #Segmentar texto en chino.
