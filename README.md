@@ -56,10 +56,11 @@ Este proyecto permite convertir texto en voz a partir de diferentes fuentes. Ade
 
 - **Python 3.7+**
 - `gTTS` – Google Text-to-Speech
-- `newspaper3k` – Para extraer texto de artículos web
 - `langdetect` – Para detectar el idioma original
 - `googletrans==4.0.0-rc1` – Para traducir el texto
-- `sumy` – Para generar resúmenes automáticos
+- `summa` – Para generar resúmenes multilingües.
+- `filatura`  – Para extraer textos de paginas web
+- `jieba`  – Parasegmetar textos en Chino.
 
 ---
 
