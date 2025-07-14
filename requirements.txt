@@ -5,5 +5,5 @@ gTTS                       #Convertir texto a audio.
 langdetect                 #Detectar el idioma del texto.
 googletrans==4.0.0-rc1     #Traducir a otros idiomas.
 summa                      #Generar resúmenes multilingües. 
-trafilaturra               #Extraer texto de paginas WEB.
+trafilatura                #Extraer texto de paginas WEB.
 jieba                      #Segmentar texto en chino.
