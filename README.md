@@ -59,8 +59,8 @@ Este proyecto permite convertir texto en voz a partir de diferentes fuentes. Ade
 - `langdetect` – Para detectar el idioma original
 - `googletrans==4.0.0-rc1` – Para traducir el texto
 - `summa` – Para generar resúmenes multilingües.
-- `filatura`  – Para extraer textos de paginas web
-- `jieba`  – Parasegmetar textos en Chino.
+- `filatura`  – Para extraer textos de páginas web
+- `jieba`  – Para segmentar textos en Chino.
 
 ---
 
